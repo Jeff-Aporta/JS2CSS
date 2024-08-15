@@ -8,7 +8,7 @@ function JS2CSS(estilo) {
    */
   const estiloConvertido = {};
 
-  for (const [key, value] of Object.entries(estilo)) {
+  for (let [key, value] of Object.entries(estilo)) {
     if (!key.startsWith(".")) {
       key = key.replace(/[A-Z]/g, (match) => `-${match.toLowerCase()}`);
     }
