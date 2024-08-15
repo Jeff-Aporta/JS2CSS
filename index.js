@@ -9,24 +9,22 @@ function JS2CSS(estilo) {
   const estiloConvertido = {};
 
   for (const [key, value] of Object.entries(estilo)) {
-    const kebabCaseKey = key.replace(
-      /**
-       * ¿Qué hace con kebab-case?
-       * Convierte las propiedades de camelCase a kebab-case.
-       */
-      /[A-Z]/g,
-      (match) => `-${match.toLowerCase()}`
-    );
-    estiloConvertido[kebabCaseKey] =
-      typeof value === "object"
-        ? JS2CSS(value)
-        : typeof value === "number" && kebabCaseKey != "z-index"
-        ? `${value}px`
-        : /**
-           * ¿Qué hace con los números?
-           * Convierte los números a pixeles (px).
-           */
-          value;
+    if (!key.startsWith(".")) {
+      key = key.replace(/[A-Z]/g, (match) => `-${match.toLowerCase()}`);
+    }
+    estiloConvertido[key] = (() => {
+      if (typeof value === "object") {
+        return JS2CSS(value);
+      }
+      
+      const noInferir = ["z-index", "scale", "opacity"];
+
+      if (typeof value === "number" && !noInferir.includes(key)) {
+        return `${value}px`;
+      }
+
+      return value;
+    })();
   }
 
   return estiloConvertido;
