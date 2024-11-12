@@ -31,6 +31,9 @@ export default {
 }
 
 function parseCSS({ objJs, infer = true, decimalsInfer = 3, clasesKebab = true }) {
+  if(!objJs){
+    return "No se ha proporcionado un objeto JavaScript para convertir.";
+  }
   const estiloConvertido = {};
 
   Object.entries(objJs).forEach(([key, value]) => {
