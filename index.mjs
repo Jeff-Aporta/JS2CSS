@@ -66,14 +66,15 @@ function parseCSS({ objJs, infer = true, decimalsInfer = 3, clasesKebab = true }
     })();
   })
 
-  return JSON.stringify(estiloConvertido, null, 2) // Convierte el objeto JSON a un string con formato de tabulación.
-    .replaceAll("},", "}") // Elimina las comas al final de los objetos de JSON para que no genere errores en CSS.
-    .replace(/,\n/g, ";\n") // Reemplaza las comas al final de las líneas por punto y coma.
-    .replaceAll(":{", "{") // Elimina los dos puntos antes de las llaves.
-    .replaceAll(": {", "{") // Elimina los dos puntos antes de las llaves, pero que tengan un espacio.
-    .replaceAll('"', "") // Elimina las comillas dobles.
-    .replaceAll("\\n", "") // Elimina los saltos de línea.
-    .substring(1, estiloCSS.length - 1); // Elimina las llaves que encierran al objeto.
+  const retorno = JSON.stringify(estiloConvertido, null, 2) // Convierte el objeto JSON a un string con formato de tabulación.
+  .replaceAll("},", "}") // Elimina las comas al final de los objetos de JSON para que no genere errores en CSS.
+  .replace(/,\n/g, ";\n") // Reemplaza las comas al final de las líneas por punto y coma.
+  .replaceAll(":{", "{") // Elimina los dos puntos antes de las llaves.
+  .replaceAll(": {", "{") // Elimina los dos puntos antes de las llaves, pero que tengan un espacio.
+  .replaceAll('"', "") // Elimina las comillas dobles.
+  .replaceAll("\\n", ""); // Elimina los saltos de línea.
+
+  return retorno.substring(1, retorno.length - 1); // Elimina las llaves que encierran al objeto.
 }
 
 function insertStyle(props) {
