@@ -1,0 +1,9 @@
+.clase {
+  background-color: blue;
+  margin: 10px;
+  opacity: 0.8;
+}
+#id {
+  padding: 20px;
+  z-index: 1;
+}

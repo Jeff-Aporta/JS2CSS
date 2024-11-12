@@ -1,45 +1,56 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>JS2CSS</title>
+    <meta property="og:site_name" content="JS2CSS | Conversor de JS a CSS" />
+    <meta property="og:title" content="JS2CSS" />
+    <meta
+      property="og:description"
+      content="Convierte funcionalidad en estética: de JS a CSS"
+    />
+    <meta
+      property="og:image"
+      content="https://jeff-aporta.github.io/JS2CSS/static/img/thumb.png"
+    />
+
     <link
       rel="icon"
       type="image/png"
-      href="https://jeff-aporta.github.io/portafolio/src/imgs/icon.png"
+      href="https://jeff-aporta.github.io/JS2CSS/static/img/icono_64x64.png"
     />
-
-    <script src="https://jeff-aporta.github.io/ASCIIMapLoader/index.js"></script>
-    <script src="https://jeff-aporta.github.io/ASCIIMapLoader/src/mapeos-personales.js"></script>
-
-    <meta property="og:site_name" content="JS2CSS" />
-    <meta property="og:title" content="JS2CSS" />
-    <meta property="og:description" content="Convierte JavaScript a CSS" />
-    <meta
-      property="og:image"
-      content="https://jeff-aporta.github.io/JS2CSS/src/img/logo.JPG"
+    <link
+      rel="apple-touch-icon"
+      href="https://jeff-aporta.github.io/JS2CSS/static/img/icono_64x64.png"
     />
+    <meta name="theme-color" content="#113" />
+
+    <script
+      type="text/javascript"
+      src="https://jeff-aporta.github.io/ascii-maploader/static/js/index.all.min.js"
+    ></script>
 
     <script>
-      Object.values(ASCII_MAPS).forEach((map) => {
-        runASCIIMapLoader_inLine(map);
-      });
+      asciiMap.CLI.designSysCliRender_DocuDesignPR();
 
-      runASCIIMapLoader_inLine(`
-            📄 index.js
-
-            🤖 REACT (JSX)
-
-            ➤📁 src
-            │
-            ├──📁 esquema
-            ╧   └──📄 contenido
-
-            📄 index
-        `);
+      if (window.location.href.includes("github")) {
+        asciiMap.writenodes("static/js/appdoc.client.merged.min.js");
+      } else {
+        asciiMap
+          .tree("static")
+          .subDir("jsx", (jsx) => {
+            jsx.jsx("initApp").subDir("contents", (contents) => {
+              contents.jsx("intro", "conv");
+            });
+          })
+          .writehtml();
+      }
     </script>
   </head>
-
-  <body></body>
+  <body>
+    <script>
+      asciiMap.CLI.designSysCliRender_DocuDesign_body();
+    </script>
+  </body>
 </html>

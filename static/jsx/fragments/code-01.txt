@@ -1,0 +1,8 @@
+insertStyle({
+  objJs: {
+    ".clase": {
+      backgroundColor: 'blue',
+      margin: 10
+    }
+  }
+});

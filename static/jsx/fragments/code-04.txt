@@ -1,0 +1,13 @@
+parseCSS({
+  objJs: {
+    ".clase": {
+      backgroundColor: 'blue',
+      margin: 10,
+      opacity: 0.8
+    },
+    "#id": {
+      padding: 20,
+      zIndex: 1
+    }
+  }
+});

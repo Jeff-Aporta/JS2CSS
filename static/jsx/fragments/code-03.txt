@@ -1,0 +1,13 @@
+const style = document.createElement("style");
+style.id = "estilo-dinamico";
+document.head.appendChild(style);
+
+insertStyle({
+  objJs: {
+    ".clase": {
+      backgroundColor: 'blue',
+      margin: 10
+    }
+  },
+  style: style
+});
