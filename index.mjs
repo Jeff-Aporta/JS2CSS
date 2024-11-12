@@ -35,7 +35,7 @@ function parseCSS({ objJs, infer = true, decimalsInfer = 3, clasesKebab = true }
 
   Object.entries(objJs).forEach(([key, value]) => {
 
-    const isHTMLDefault = htmlTags.some(key);
+    const isHTMLDefault = htmlTags.some(e => e == key);
     const isClassCSS = typeof value == "object";
 
     if (!key.startsWith(".") && !isHTMLDefault) {
