@@ -26,8 +26,13 @@ const htmlTags = [
 ];
 
 export default {
+  obj2CSS,
   parseCSS,
   insertStyle,
+}
+
+function obj2CSS(objJs) {
+  return parseCSS({objJs});
 }
 
 function parseCSS({ objJs, infer = true, decimalsInfer = 3, clasesKebab = true, deep = 0 }) {
