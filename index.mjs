@@ -30,8 +30,8 @@ export default {
   insertStyle,
 }
 
-function parseCSS({ objJs, infer = true, decimalsInfer = 3, clasesKebab = true }) {
-  if(!objJs){
+function parseCSS({ objJs, infer = true, decimalsInfer = 3, clasesKebab = true, deep = 0 }) {
+  if (!objJs) {
     return "No se ha proporcionado un objeto JavaScript para convertir.";
   }
   const estiloConvertido = {};
@@ -53,7 +53,9 @@ function parseCSS({ objJs, infer = true, decimalsInfer = 3, clasesKebab = true }
     }
     estiloConvertido[key] = (() => {
       if (isClassCSS) {
-        return parseCSS(value);
+        const str = parseCSS({ objJs: value, deep: deep + 1 });
+        let retorno = processFormat(str);
+        return retorno;
       }
 
       const isNumber = typeof value == "number";
@@ -65,23 +67,37 @@ function parseCSS({ objJs, infer = true, decimalsInfer = 3, clasesKebab = true }
       return value;
     })();
   })
+  const str = JSON.stringify(estiloConvertido, null, 1);
 
-  const retorno = JSON.stringify(estiloConvertido, null, 2) // Convierte el objeto JSON a un string con formato de tabulación.
-  .replaceAll("},", "}") // Elimina las comas al final de los objetos de JSON para que no genere errores en CSS.
-  .replace(/,\n/g, ";\n") // Reemplaza las comas al final de las líneas por punto y coma.
-  .replaceAll(":{", "{") // Elimina los dos puntos antes de las llaves.
-  .replaceAll(": {", "{") // Elimina los dos puntos antes de las llaves, pero que tengan un espacio.
-  .replaceAll('"', "") // Elimina las comillas dobles.
-  .replaceAll("\\n", ""); // Elimina los saltos de línea.
+  let retorno = processFormat(str);
 
-  return retorno.substring(1, retorno.length - 1); // Elimina las llaves que encierran al objeto.
+  if (deep == 0) {
+    retorno = retorno.substring(1, retorno.length - 1)
+  }
+
+  return retorno; // Elimina las llaves que encierran al objeto.
+
+  function processFormat(str) {
+    let retorno = str // Convierte el objeto JSON a un string con formato de tabulación.
+      .replaceAll("},", "}") // Elimina las comas al final de los objetos de JSON para que no genere errores en CSS.
+      .replace(/,\n/g, ";") // Reemplaza las comas al final de las líneas por punto y coma.
+      .replaceAll(":{", "{") // Elimina los dos puntos antes de las llaves.
+      .replaceAll(": {", "{") // Elimina los dos puntos antes de las llaves, pero que tengan un espacio.
+      .replaceAll(': "{', "{") // Elimina los dos puntos antes de las llaves, pero que tengan un espacio.
+      .replaceAll('{ ', "{") // Elimina los dos puntos antes de las llaves, pero que tengan un espacio.
+      .replaceAll('"', "") // Elimina las comillas dobles.
+      .replaceAll("\\n", "") // Elimina los saltos de línea.
+      .replaceAll("\n", ""); // Elimina los saltos de línea.
+
+    return retorno;
+  }
 }
 
 function insertStyle(props) {
   let { style, id } = props;
   if (!style) {
     if (id) {
-      style = document.querySelector(`style#${id}`);
+      style = document.querySelector(`style#${id}`) ?? document.createElement("style");
     } else {
       style = document.createElement("style");
     }
