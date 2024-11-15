@@ -32,7 +32,7 @@ export default {
 }
 
 function obj2CSS(objJs) {
-  return parseCSS({objJs});
+  return parseCSS({ objJs });
 }
 
 function parseCSS({ objJs, infer = true, decimalsInfer = 3, clasesKebab = true, deep = 0 }) {
@@ -46,7 +46,7 @@ function parseCSS({ objJs, infer = true, decimalsInfer = 3, clasesKebab = true, 
     const isHTMLDefault = htmlTags.some(e => e == key);
     const isClassCSS = typeof value == "object";
 
-    if (!key.startsWith(".") && !isHTMLDefault) {
+    if (!key.startsWith(".") && !key.includes(",") && !isHTMLDefault) {
       const kebab = key.replace(/[A-Z]/g, (match) => `-${match.toLowerCase()}`);
       if (clasesKebab && key != kebab) {
         if (isClassCSS) {
