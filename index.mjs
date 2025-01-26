@@ -50,7 +50,7 @@ function parseCSS(props) {
     if (!key.startsWith(".") && !key.includes(",") && !isHTMLDefault) {
       const kebab = key.replace(/[A-Z]/g, (match) => `-${match.toLowerCase()}`);
       if (clasesKebab && key != kebab) {
-        if (isClassCSS) {
+        if (isClassCSS && !key.startsWith("@")) {
           key = "." + kebab;
         } else {
           key = kebab;
