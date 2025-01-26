@@ -35,9 +35,10 @@ function obj2CSS(objJs) {
   return parseCSS({ objJs });
 }
 
-function parseCSS({ objJs, infer = true, decimalsInfer = 3, clasesKebab = true, deep = 0 }) {
+function parseCSS(props) {
+  const { objJs, infer = true, decimalsInfer = 3, clasesKebab = true, deep = 0 } = props;
   if (!objJs) {
-    return "No se ha proporcionado un objeto JavaScript para convertir.";
+    return parseCSS({ objJs: props });
   }
   const estiloConvertido = {};
 
