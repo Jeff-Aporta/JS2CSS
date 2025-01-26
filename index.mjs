@@ -47,10 +47,16 @@ function parseCSS(props) {
     const isHTMLDefault = htmlTags.some(e => e == key);
     const isClassCSS = typeof value == "object";
 
-    if (!key.startsWith(".") && !key.includes(",") && !isHTMLDefault) {
+    const classSelector = key.startsWith(".");
+    const idSelector = key.startsWith("#");
+    const decorSelector = key.startsWith("@");
+
+    const inferClass = !classSelector && !idSelector && !decorSelector;
+
+    if (inferClass && !key.includes(",") && !isHTMLDefault) {
       const kebab = key.replace(/[A-Z]/g, (match) => `-${match.toLowerCase()}`);
       if (clasesKebab && key != kebab) {
-        if (isClassCSS && !key.startsWith("@")) {
+        if (isClassCSS) {
           key = "." + kebab;
         } else {
           key = kebab;
