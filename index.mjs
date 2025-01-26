@@ -91,15 +91,12 @@ function parseCSS(props) {
 
   function processFormat(str) {
     let retorno = str // Convierte el objeto JSON a un string con formato de tabulación.
-      .replaceAll("},", "}") // Elimina las comas al final de los objetos de JSON para que no genere errores en CSS.
-      .replace(/,\n/g, ";") // Reemplaza las comas al final de las líneas por punto y coma.
-      .replaceAll(":{", "{") // Elimina los dos puntos antes de las llaves.
-      .replaceAll(": {", "{") // Elimina los dos puntos antes de las llaves, pero que tengan un espacio.
-      .replaceAll(': "{', "{") // Elimina los dos puntos antes de las llaves, pero que tengan un espacio.
-      .replaceAll('{ ', "{") // Elimina los dos puntos antes de las llaves, pero que tengan un espacio.
       .replaceAll('"', "") // Elimina las comillas dobles.
-      .replaceAll("\\n", "") // Elimina los saltos de línea.
-      .replaceAll("\n", ""); // Elimina los saltos de línea.
+      .replace(/\}\s*,/g, "}") // Elimina las comas al final de los objetos de JSON para que no genere errores en CSS.
+      .replace(/,\n/g, ";") // Reemplaza las comas al final de las líneas por punto y coma.
+      .replace(/:?\s*"?\{\s*/g, "{") // Elimina los dos puntos antes de las llaves.
+      .replace(/\\[nr]/g," ") // Elimina los saltos de línea en string
+      .replace(/\s+/g," "); // Elimina espacios o saltos de línea innecesarios
 
     return retorno;
   }
